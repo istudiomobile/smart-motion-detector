@@ -1,0 +1,13 @@
+{
+  "name": "Whatsapp Notifier",
+  "description": "Motion sensor that sends Whatsapp alerts",
+  "version": "1.0.0",
+  "main": "main.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+  }
+}
