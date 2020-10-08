@@ -1,6 +1,6 @@
 "use strict" ;
 
-var APP_NAME = "WhatsApp Notifier" ;
+var APP_NAME = "Home Smart Motion Detector" ;
 console.log("\n\n\n\n\n\n") ;                       // poor man's clear console
 console.log("Initializing " + APP_NAME) ;
 
@@ -29,21 +29,21 @@ RELAY.write(1);
 LED.dir(m.DIR_OUT);
 LED.write(0);
 PIR_SENSOR.dir(m.DIR_IN);
-var instanceId   = "3"; // TODO: Replace it with your gateway instance ID here
-var clientId     = "istudiomobile-IT@istudiomobileapplab.com";     // TODO: Replace it with your Forever Green client ID here
-var clientSecret = "90508e8e628f4155b591e0d9bf711203";  // TODO: Replace it with your Forever Green client secret here
+var instanceId   = "20"; // TODO: Replace it with your gateway instance ID here
+var clientId     = "alfredoramirezg21@gmail.com";     // TODO: Replace it with your Forever Green client ID here
+var clientSecret = "698ff41cb2ab406fa3eed855b04ca82e";  // TODO: Replace it with your Forever Green client secret here
 
 var jsonPayload = JSON.stringify({
     //group_admin: "5214433301716", // TODO: Specify the WhatsApp number of the group creator, including the country code
     number: "5214432177605",  // TODO: Specify the recipient's number here. NOT the gateway number
     //group_name: "EMERGENCIAS Vista Bella",   // TODO:  Specify the name of the group    
-    message: "Movimiento detectado. Saltillo #129"
+    message: "ALARMA SILENCIOSA! Movimiento detectado. UTUME #202"
 });
 
 var options = {
     hostname: "api.whatsmate.net",
     port: 80,
-    path: "/v2/whatsapp/single/message/" + instanceId,
+    path: "/v3/whatsapp/single/text/message/" + instanceId,
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ function isMotionDetected(){
 var periodicActivity = function() {
     if(isMotionDetected()){
         LED.write(1);
-        request = new http.ClientRequest(options);
+        // request = new http.ClientRequest(options);
         request.end(jsonPayload);
         RELAY.write(0);
         setSirenState(true);
@@ -85,7 +85,7 @@ var periodicActivity = function() {
         setSirenState(false);
     }
 };
-var intervalID = setInterval(periodicActivity, 1000) ;  // start the periodic write
+var intervalID = setInterval(periodicActivity, 5000) ;  // start the periodic write
 
 function setSirenState(state) {
   firebase.database().ref('Utume_202/motion_detectors/sensor_1').set({
